@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Adspay by Maxly Inc.</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://kit.fontawesome.com/d2af653d3a.js" crossorigin="anonymous"></script>
+</head>
+<body class="dash-layout">
+
+    <aside class="dash-sidebar">
+        <div class="brand">
+            <h2 class="animate__animated animate__pulse animate__infinite">ADSPAY</h2>
+        </div>
+        <nav>
+            <a href="#" class="active"><i class="fas fa-chart-line"></i> <span>Overview</span></a>
+            <a href="#video-section"><i class="fas fa-play-circle"></i> <span>Watch Ads</span></a>
+            <a href="withdraw.html"><i class="fas fa-wallet"></i> <span>Withdraw</span></a>
+            <a href="#" id="logout-btn"><i class="fas fa-power-off"></i> <span>Logout</span></a>
+        </nav>
+    </aside>
+
+    <main class="dash-main">
+        <header class="top-nav">
+            <div class="welcome-text">
+                <h1>Hello, <span id="display-name">User</span>!</h1>
+                <p>Welcome back to Maxly Inc. Reward Center</p>
+            </div>
+            <div class="user-profile">
+                <i class="fas fa-user-shield"></i>
+            </div>
+        </header>
+
+        <div class="content-card referral-section">
+    <h3><i class="fas fa-users"></i> Invite & Earn</h3>
+    <p>Get <strong>500 Points</strong> for every friend you invite!</p>
+    <div class="share-box">
+        <input type="text" id="referral-link" readonly value="Loading...">
+        <button onclick="copyReferral()"><i class="fas fa-copy"></i></button>
+    </div>
+</div>
+
+        <section class="stat-grid">
+             
+            <section class="bonus-zone animate__animated animate__fadeIn">
+    <div class="bonus-card">
+        <div>
+            <h4>Daily Check-in</h4>
+            <p>Claim your daily 20 points</p>
+        </div>
+        <button id="claim-daily-btn" class="btn-small">Claim</button>
+    </div>
+</section>
+
+            <div class="stat-card animate__animated animate__fadeInUp">
+                <div class="stat-info">
+                    <h3>Current Balance</h3>
+                    <h2 id="balance-points">0.00</h2>
+                    <p>Points Ready to Cash</p>
+                </div>
+                <div class="stat-icon"><i class="fas fa-coins"></i></div>
+            </div>
+        </section>
+
+        <section id="video-section" class="ad-card animate__animated animate__fadeIn">
+            <div class="ad-header">
+                <h3><i class="fas fa-video"></i> Premium Video Rewards</h3>
+                <span class="badge">Earn 50 Points</span>
+            </div>
+            
+            <div class="video-placeholder">
+    <div id="adsterra-video-container">
+        <i class="fas fa-play-circle" style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem;"></i>
+        <p>Premium Video Reward Available</p>
+    </div>
+    
+    <button id="start-video-btn" class="btn-primary">
+        Watch Video to Earn 50 Points
+    </button>
+
+    <div id="ad-active-notice" style="display:none;">
+        <div class="loader-circle"></div>
+        <p>Verification in progress... <span id="timer-sec">30</span>s</p>
+    </div>
+</div>
+    </main>
+  
+    <nav class="mobile-nav">
+    <a href="dashboard.html" class="nav-item">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="leaderboard.html" class="nav-item">
+        <i class="fas fa-trophy"></i>
+        <span>Top List</span>
+    </a>
+    <a href="withdraw.html" class="nav-item">
+        <i class="fas fa-wallet"></i>
+        <span>Cash Out</span>
+    </a>
+</nav>
+
+    <div id="toast-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+</body>
+</html>

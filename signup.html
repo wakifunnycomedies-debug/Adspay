@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Adspay | Maxly Inc.</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://kit.fontawesome.com/d2af653d3a.js" crossorigin="anonymous"></script>
+</head>
+<body class="auth-page">
+
+    <div class="auth-container">
+        <div class="auth-image animate__animated animate__fadeIn">
+            <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=800" alt="Earning on mobile">
+        </div>
+        
+        <div class="auth-form-box animate__animated animate__fadeInRight">
+            <div class="form-header">
+                <h2>Create Account</h2>
+                <p>Start earning points with Maxly Inc. today.</p>
+            </div>
+
+            <form id="signup-form">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" placeholder="Email Address" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Create Password" required>
+                    <button type="button" id="togglePassword" class="toggle-btn">
+                        <i class="fas fa-eye" id="eyeIcon"></i>
+                    </button>
+                </div>
+
+                <button type="submit" class="btn-primary">Secure Sign Up</button>
+            </form>
+            <p class="auth-footer">Already have an account? <a href="login.html">Login</a></p>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>ADSPAY</h3>
+                <p>A flagship product by Maxly Inc. Leading the digital reward revolution.</p>
+                <div class="social-icons">
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-linkedin"></i>
+                    <i class="fab fa-github"></i>
+                </div>
+            </div>
+     <div class="footer-links">
+    <h4>Community</h4>
+    <a href="earn.html"><i class="fas fa-coins"></i> How to Earn</a>
+    <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
+    <a href="faq.html"><i class="fas fa-question-circle"></i> FAQ</a>
+</div>
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="security.html">Security Protocol</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Maxly Inc. Built for millions. Hacker-proof security enabled.</p>
+        </div>
+    </footer>
+
+<div id="toast-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script src="app.js"></script>
+</body>
+</html>

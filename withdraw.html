@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdraw | Maxly Inc.</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/d2af653d3a.js" crossorigin="anonymous"></script>
+</head>
+<body class="dash-layout">
+
+    <aside class="dash-sidebar">
+        <div class="brand"><h2>ADSPAY</h2></div>
+        <nav>
+            <a href="dashboard.html"><i class="fas fa-chart-line"></i> <span>Overview</span></a>
+            <a href="withdraw.html" class="active"><i class="fas fa-wallet"></i> <span>Withdraw</span></a>
+            <a href="#" id="logout-btn"><i class="fas fa-power-off"></i> <span>Logout</span></a>
+        </nav>
+    </aside>
+
+    <main class="dash-main">
+        <header class="top-nav">
+            <h1>Cash Out</h1>
+            <p>Convert your points to Naira instantly.</p>
+        </header>
+
+        <section class="withdraw-container">
+            <div class="conversion-card animate__animated animate__fadeIn">
+                <div class="conv-box">
+                    <small>Your Points</small>
+                    <h2 id="current-points">0</h2>
+                </div>
+                <i class="fas fa-exchange-alt"></i>
+                <div class="conv-box">
+                    <small>Estimated Naira</small>
+                    <h2 id="naira-value">₦0.00</h2>
+                </div>
+            </div>
+
+            <div class="min-withdraw-info">
+                <p><i class="fas fa-info-circle"></i> Minimum Withdrawal: <strong>5,000 Points (₦500)</strong></p>
+            </div>
+
+            <form id="withdraw-form" class="content-card">
+    <div class="input-group">
+        <label><i class="fas fa-university"></i> Payment Method</label>
+        <select id="payment-method" class="custom-select" required>
+            <option value="" disabled selected>Select Provider</option>
+            <option value="Opay">Opay</option>
+            <option value="Palmpay">Palmpay</option>
+            <option value="Moniepoint">Moniepoint</option>
+            <option value="Other">Other Nigerian Banks</option>
+        </select>
+    </div>
+
+    <div class="input-group hidden-field" id="bank-name-group">
+        <label><i class="fas fa-search-dollar"></i> Bank Name</label>
+        <select id="bank-name" class="custom-select">
+            <option value="" disabled selected>Select Bank</option>
+            <option value="GTBank">Guaranty Trust Bank (GTB)</option>
+            <option value="Zenith">Zenith Bank</option>
+            <option value="Access">Access Bank</option>
+            <option value="UBA">United Bank for Africa (UBA)</option>
+            <option value="FirstBank">First Bank of Nigeria</option>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <label><i class="fas fa-id-card"></i> Account Number</label>
+        <input type="text" id="account-number" placeholder="10-digit Account Number" required maxlength="10">
+    </div>
+
+    <div class="input-group">
+        <label><i class="fas fa-coins"></i> Points to Withdraw</label>
+        <input type="number" id="withdraw-amount" placeholder="Min 5000" required>
+    </div>
+
+    <button type="submit" id="withdraw-btn" class="btn-primary">Process Withdrawal</button>
+</form>
+    </main>
+    
+    
+    <nav class="mobile-nav">
+    <a href="dashboard.html" class="nav-item">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="leaderboard.html" class="nav-item">
+        <i class="fas fa-trophy"></i>
+        <span>Top List</span>
+    </a>
+    <a href="withdraw.html" class="nav-item">
+        <i class="fas fa-wallet"></i>
+        <span>Cash Out</span>
+    </a>
+</nav>
+
+    <div id="toast-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+</body>
+</html>

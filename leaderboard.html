@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard | Adspay</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/d2af653d3a.js" crossorigin="anonymous"></script>
+</head>
+<body class="dash-layout">
+
+    <aside class="dash-sidebar">
+        <div class="brand"><h2>ADSPAY</h2></div>
+        <nav>
+            <a href="dashboard.html"><i class="fas fa-chart-line"></i> <span>Overview</span></a>
+            <a href="leaderboard.html" class="active"><i class="fas fa-trophy"></i> <span>Top Earners</span></a>
+            <a href="withdraw.html"><i class="fas fa-wallet"></i> <span>Withdraw</span></a>
+            <a href="#" id="logout-btn"><i class="fas fa-power-off"></i> <span>Logout</span></a>
+        </nav>
+    </aside>
+
+    <main class="dash-main">
+        <header class="top-nav">
+            <h1>Top Earners</h1>
+            <p>The elite members of Maxly Inc. Community</p>
+        </header>
+
+        <section class="leaderboard-container">
+            <div class="top-three" id="podium">
+                </div>
+
+            <div class="content-card">
+                <table class="leader-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>User</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leader-list">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    
+    <nav class="mobile-nav">
+    <a href="dashboard.html" class="nav-item">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="leaderboard.html" class="nav-item">
+        <i class="fas fa-trophy"></i>
+        <span>Top List</span>
+    </a>
+    <a href="withdraw.html" class="nav-item">
+        <i class="fas fa-wallet"></i>
+        <span>Cash Out</span>
+    </a>
+</nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+    <script src="leaderboard.js"></script>
+</body>
+</html>

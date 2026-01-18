@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Maxly Inc.</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://kit.fontawesome.com/d2af653d3a.js" crossorigin="anonymous"></script>
+</head>
+<body class="admin-page">
+
+    <main class="admin-container">
+        <header class="admin-header animate__animated animate__fadeIn">
+            <div class="header-flex">
+                <div>
+                    <h1>Payment Center</h1>
+                    <p>Verified Payout Requests</p>
+                </div>
+                <a href="dashboard.html" class="btn-small">Back to App</a>
+            </div>
+        </header>
+
+        <section class="admin-table-wrapper">
+            <table id="admin-payout-table">
+                <thead>
+                    <tr>
+                        <th>User Email</th>
+                        <th>Points</th>
+                        <th>Method</th>
+                        <th>Account</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="payout-list">
+                    </tbody>
+            </table>
+        </section>
+    </main>
+
+    
+    <nav class="mobile-nav">
+    <a href="dashboard.html" class="nav-item">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="leaderboard.html" class="nav-item">
+        <i class="fas fa-trophy"></i>
+        <span>Top List</span>
+    </a>
+    <a href="withdraw.html" class="nav-item">
+        <i class="fas fa-wallet"></i>
+        <span>Cash Out</span>
+    </a>
+</nav>
+
+    <div id="toast-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
