@@ -176,27 +176,51 @@ async function secureReward(pts) {
         if (typeof updateNairaConversion === "function") updateNairaConversion(newBalance);
     }
 }
+// 11. AD LOGIC (Updated for MoneTag)
+const MONETAG_SMARTLINK = "https://otieu.com/4/10480244"; // PASTE YOUR MONETAG LINK HERE
 
-// 11. AD LOGIC
-const ADSTERRA_URL = "https://latherprofanecognizance.com/h2b6301yd?key=6a2af8d385138fe38dbda2153d09543d";
 if(startVideoBtn) {
     let timeLeft = 30;
+    let adWindow = null;
+
     startVideoBtn.addEventListener('click', () => {
+        // 1. Open the Ad in a new tab (This triggers the 'Click' in MoneTag)
+        adWindow = window.open(MONETAG_SMARTLINK, '_blank');
+
+        // 2. Hide button and show timer on your site
         startVideoBtn.style.display = 'none';
         adNotice.style.display = 'block';
-        videoContainer.innerHTML = `<iframe src="${ADSTERRA_URL}" style="width:100%; height:300px; border:none; border-radius:15px;"></iframe>`;
+        
+        // Show a placeholder in the video container
+        videoContainer.innerHTML = `
+            <div style="padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px; text-align: center;">
+                <p>Watching Ad in new tab...</p>
+                <small>Do not close the ad tab until the timer finish!</small>
+            </div>
+        `;
 
         let adInterval = setInterval(async () => {
+            // Only count down if the user is looking at your site
             if (document.visibilityState === 'visible') {
                 timeLeft--;
                 document.getElementById('timer-sec').innerText = timeLeft;
             }
+
             if (timeLeft <= 0) {
                 clearInterval(adInterval);
-                await secureReward(50);
-                videoContainer.innerHTML = '<p>Ad Completed!</p>';
+                
+                // 3. Secure the Reward
+                await secureReward(50); 
+                
+                videoContainer.innerHTML = '<p style="color: #10b981; font-weight: bold;">✅ 50 Points Added to Maxly Wallet!</p>';
                 adNotice.style.display = 'none';
-                setTimeout(() => { startVideoBtn.style.display = 'inline-block'; timeLeft = 30; }, 5000); 
+
+                // Reset for next time
+                setTimeout(() => { 
+                    startVideoBtn.style.display = 'inline-block'; 
+                    timeLeft = 30; 
+                    videoContainer.innerHTML = '';
+                }, 5000); 
             }
         }, 1000);
     });
