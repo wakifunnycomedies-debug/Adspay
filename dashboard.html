@@ -1,11 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Adspay by Maxly Inc.</title>
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.min.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/videojs-vast-vpaid@2.0.2/dist/videojs.vast.vpaid.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/videojs-vast-vpaid@2.0.2/dist/videojs_5.vast.vpaid.min.js"></script>
+
     <script src="https://kit.fontawesome.com/d2af653d3a.js" crossorigin="anonymous"></script>
 </head>
 <body class="dash-layout">
@@ -64,11 +70,11 @@
             </div>
         </section>
 
-        <section id="video-section" class="ad-card animate__animated animate__fadeIn">
-            <div class="ad-header">
-                <h3><i class="fas fa-video"></i> Premium Video Rewards</h3>
-                <span class="badge">Earn 50 Points</span>
-            </div>
+       <div id="video-ad-wrapper" style="display:none; max-width: 400px; margin: 20px auto;">
+    <video id="hilltop-video" class="video-js vjs-default-skin" controls preload="auto" width="400" height="225">
+        <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+    </video>
+</div> 
             
             <div class="video-placeholder">
     <div id="adsterra-video-container">

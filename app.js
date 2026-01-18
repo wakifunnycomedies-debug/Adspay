@@ -19,7 +19,7 @@ const eyeIcon = document.querySelector('#eyeIcon');
 const logoutBtns = document.querySelectorAll('#logout-btn');
 const startVideoBtn = document.getElementById('start-video-btn');
 const adNotice = document.getElementById('ad-active-notice');
-const videoContainer = document.getElementById('adsterra-video-container');
+const videoContainer = document.getElementById('monetag-smartlink-container');
 const claimDailyBtn = document.getElementById('claim-daily-btn');
 const withdrawForm = document.getElementById('withdraw-form');
 
@@ -162,18 +162,42 @@ function copyReferral() {
 
 // 10. SECURE REWARD (FOR ADS & DAILY)
 async function secureReward(pts) {
+    // 1. Check Auth
     const { data: { user } } = await supabaseClient.auth.getUser();
     if (!user) return;
 
-    const { data: profile } = await supabaseClient.from('profiles').select('balance_points').eq('id', user.id).single();
-    const newBalance = (profile?.balance_points || 0) + pts;
+    // 2. Anti-Cheat: Prevent background tab farming
+    if (document.visibilityState !== 'visible') {
+        showToast("Keep the page open to earn!", "error");
+        return;
+    }
 
-    const { error } = await supabaseClient.from('profiles').update({ balance_points: newBalance }).eq('id', user.id);
+    // 3. Fetch current balance
+    const { data: profile } = await supabaseClient
+        .from('profiles')
+        .select('balance_points')
+        .eq('id', user.id)
+        .single();
+
+    // 4. Calculate and Update
+    const newBalance = (profile?.balance_points || 0) + pts;
+    const { error } = await supabaseClient
+        .from('profiles')
+        .update({ balance_points: newBalance })
+        .eq('id', user.id);
+
+    // 5. Update UI
     if (!error) {
         const pointsDisplay = document.getElementById('balance-points') || document.getElementById('current-points');
         if(pointsDisplay) pointsDisplay.innerText = newBalance;
+        
         showToast(`+${pts} Points Added!`, 'success');
-        if (typeof updateNairaConversion === "function") updateNairaConversion(newBalance);
+        
+        if (typeof updateNairaConversion === "function") {
+            updateNairaConversion(newBalance);
+        }
+    } else {
+        showToast("Error updating points.", "error");
     }
 }
 // 11. AD LOGIC (Updated for MoneTag)
@@ -226,13 +250,51 @@ if(startVideoBtn) {
     });
 }
 
-// 12. DAILY BONUS
+// 12. DAILY BONUS (REFRESH-PROOF)
 if (claimDailyBtn) {
     claimDailyBtn.addEventListener('click', async () => {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+        if (!user) return;
+
         claimDailyBtn.disabled = true;
-        claimDailyBtn.innerText = "Processing...";
-        await secureReward(20);
-        claimDailyBtn.innerText = "Claimed!";
+        claimDailyBtn.innerText = "Checking...";
+
+        // 1. Fetch the last claim time from Database
+        const { data: profile } = await supabaseClient
+            .from('profiles')
+            .select('last_daily_claim')
+            .eq('id', user.id)
+            .single();
+
+        const now = new Date();
+        const lastClaim = profile.last_daily_claim ? new Date(profile.last_daily_claim) : null;
+        
+        // 2. Check if 24 hours have passed (24 * 60 * 60 * 1000 milliseconds)
+        const oneDay = 24 * 60 * 60 * 1000;
+        
+        if (lastClaim && (now - lastClaim) < oneDay) {
+            const hoursLeft = Math.ceil((oneDay - (now - lastClaim)) / (1000 * 60 * 60));
+            showToast(`Wait ${hoursLeft} more hours for your next bonus!`, 'error');
+            claimDailyBtn.innerText = "Locked";
+            return;
+        }
+
+        // 3. If allowed, update Balance AND last_daily_claim time
+        const { error } = await supabaseClient
+            .from('profiles')
+            .update({ 
+                last_daily_claim: now.toISOString() 
+            })
+            .eq('id', user.id);
+
+        if (!error) {
+            await secureReward(20); // Adds the points
+            claimDailyBtn.innerText = "Claimed!";
+            showToast("Daily Bonus Secured!", "success");
+        } else {
+            claimDailyBtn.disabled = false;
+            claimDailyBtn.innerText = "Claim Daily Bonus";
+        }
     });
 }
 
