@@ -200,31 +200,29 @@ async function secureReward(pts) {
         showToast("Error updating points.", "error");
     }
 }
-// 11. AD LOGIC (Updated for MoneTag)
-const MONETAG_SMARTLINK = "https://otieu.com/4/10480244"; // PASTE YOUR MONETAG LINK HERE
+// 11. HILLTOP ADS + VIDEO.JS LOGIC
+const HILLTOP_VAST_TAG = "https://sadpicture.com/d/m.FczAdNG/N/vDZzG/UV/qeWmo9auSZVUDl/kxPSTlY/3SNTTFAj2wMojdA/tANOjRce1bMgDRY_yZMzQl";
 
 if(startVideoBtn) {
     let timeLeft = 30;
-    let adWindow = null;
+    const player = videojs('hilltop-video');
 
     startVideoBtn.addEventListener('click', () => {
-        // 1. Open the Ad in a new tab (This triggers the 'Click' in MoneTag)
-        adWindow = window.open(MONETAG_SMARTLINK, '_blank');
-
-        // 2. Hide button and show timer on your site
         startVideoBtn.style.display = 'none';
+        document.getElementById('video-ad-wrapper').style.display = 'block';
         adNotice.style.display = 'block';
-        
-        // Show a placeholder in the video container
-        videoContainer.innerHTML = `
-            <div style="padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px; text-align: center;">
-                <p>Watching Ad in new tab...</p>
-                <small>Do not close the ad tab until the timer finish!</small>
-            </div>
-        `;
+
+        // Initialize the VAST plugin with your Hilltop link
+        player.vastClient({
+            adTagUrl: HILLTOP_VAST_TAG,
+            playAdAlways: true,
+            adCancelTimeout: 5000,
+            adsEnabled: true
+        });
+
+        player.play(); // Start the ad/video
 
         let adInterval = setInterval(async () => {
-            // Only count down if the user is looking at your site
             if (document.visibilityState === 'visible') {
                 timeLeft--;
                 document.getElementById('timer-sec').innerText = timeLeft;
@@ -232,19 +230,19 @@ if(startVideoBtn) {
 
             if (timeLeft <= 0) {
                 clearInterval(adInterval);
+                player.pause();
                 
-                // 3. Secure the Reward
-                await secureReward(50); 
+                await secureReward(50); // Give the points
                 
-                videoContainer.innerHTML = '<p style="color: #10b981; font-weight: bold;">✅ 50 Points Added to Maxly Wallet!</p>';
+                // Reset UI
+                document.getElementById('video-ad-wrapper').style.display = 'none';
                 adNotice.style.display = 'none';
+                showToast("Video Ad Complete!", "success");
 
-                // Reset for next time
-                setTimeout(() => { 
-                    startVideoBtn.style.display = 'inline-block'; 
-                    timeLeft = 30; 
-                    videoContainer.innerHTML = '';
-                }, 5000); 
+                setTimeout(() => {
+                    startVideoBtn.style.display = 'inline-block';
+                    timeLeft = 30;
+                }, 5000);
             }
         }, 1000);
     });
