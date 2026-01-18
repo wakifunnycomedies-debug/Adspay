@@ -204,47 +204,51 @@ async function secureReward(pts) {
 const HILLTOP_VAST_TAG = "https://sadpicture.com/d/m.FczAdNG/N/vDZzG/UV/qeWmo9auSZVUDl/kxPSTlY/3SNTTFAj2wMojdA/tANOjRce1bMgDRY_yZMzQl";
 
 if(startVideoBtn) {
-    let timeLeft = 30;
     const player = videojs('hilltop-video');
 
     startVideoBtn.addEventListener('click', () => {
+        // 1. Prepare UI
         startVideoBtn.style.display = 'none';
         document.getElementById('video-ad-wrapper').style.display = 'block';
         adNotice.style.display = 'block';
+        document.getElementById('timer-sec').innerText = "Loading Ad...";
 
-        // Initialize the VAST plugin with your Hilltop link
+        // 2. Initialize VAST Client
         player.vastClient({
             adTagUrl: HILLTOP_VAST_TAG,
             playAdAlways: true,
-            adCancelTimeout: 5000,
+            adCancelTimeout: 10000, // Give it 10 seconds to load
             adsEnabled: true
         });
 
-        player.play(); // Start the ad/video
+        // 3. LISTEN FOR THE AD FINISHING (The "Secret" Event)
+        player.on('vast.adEnd', async () => {
+            console.log("Ad Finished! Rewarding user...");
+            
+            // Give reward
+            await secureReward(50); 
+            
+            // Clean up UI
+            document.getElementById('video-ad-wrapper').style.display = 'none';
+            adNotice.style.display = 'none';
+            showToast("Premium Reward Added!", "success");
 
-        let adInterval = setInterval(async () => {
-            if (document.visibilityState === 'visible') {
-                timeLeft--;
-                document.getElementById('timer-sec').innerText = timeLeft;
-            }
+            // Reset button after 5 seconds
+            setTimeout(() => {
+                startVideoBtn.style.display = 'inline-block';
+                startVideoBtn.innerText = "Watch Another Ad";
+            }, 5000);
+        });
 
-            if (timeLeft <= 0) {
-                clearInterval(adInterval);
-                player.pause();
-                
-                await secureReward(50); // Give the points
-                
-                // Reset UI
-                document.getElementById('video-ad-wrapper').style.display = 'none';
-                adNotice.style.display = 'none';
-                showToast("Video Ad Complete!", "success");
+        // 4. Handle errors (Ad blocked or no fill)
+        player.on('vast.adError', () => {
+            showToast("Ad failed to load. Please try again.", "error");
+            startVideoBtn.style.display = 'inline-block';
+            document.getElementById('video-ad-wrapper').style.display = 'none';
+            adNotice.style.display = 'none';
+        });
 
-                setTimeout(() => {
-                    startVideoBtn.style.display = 'inline-block';
-                    timeLeft = 30;
-                }, 5000);
-            }
-        }, 1000);
+        player.play(); 
     });
 }
 
