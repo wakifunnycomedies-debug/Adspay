@@ -178,7 +178,7 @@ async function secureReward(pts) {
 }
 
 // 11. AD LOGIC
-const ADSTERRA_URL = "YOUR_ADSTERRA_DIRECT_LINK_HERE";
+const ADSTERRA_URL = "https://latherprofanecognizance.com/h2b6301yd?key=6a2af8d385138fe38dbda2153d09543d";
 if(startVideoBtn) {
     let timeLeft = 30;
     startVideoBtn.addEventListener('click', () => {
